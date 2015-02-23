@@ -18,8 +18,8 @@ func TestCounter(t *testing.T) {
 
 	s.Counter(1.0, "gorets", 1)
 
-	if expected, got := "gorets:1|c", b.String(); expected != got {
-		t.Errorf("expected %q, got %q", expected, got)
+	if expected, got := "gorets:1.000000|c", b.String(); expected != got {
+		t.Errorf("expected '%s', got '%s'", expected, got)
 	}
 }
 
@@ -32,8 +32,8 @@ func TestTiming(t *testing.T) {
 
 	s.Timing(1.0, "glork", 320*time.Millisecond)
 
-	if expected, got := "glork:320|ms", b.String(); expected != got {
-		t.Errorf("expected %q, got %q", expected, got)
+	if expected, got := "glork:320.000000|ms", b.String(); expected != got {
+		t.Errorf("expected '%s', got '%s'", expected, got)
 	}
 }
 
@@ -47,7 +47,7 @@ func TestGauge(t *testing.T) {
 	s.Gauge(1.0, "gaugor", "333")
 
 	if expected, got := "gaugor:333|g", b.String(); expected != got {
-		t.Errorf("expected %q, got %q", expected, got)
+		t.Errorf("expected '%s', got '%s'", expected, got)
 	}
 }
 
@@ -61,10 +61,10 @@ func TestMany(t *testing.T) {
 	s.Counter(1.0, "foo", 1, 2, 3)
 	s.Timing(1.0, "bar", 4*time.Millisecond, 5*time.Millisecond)
 
-	expected := "foo:1|c\nfoo:2|c\nfoo:3|cbar:4|ms\nbar:5|ms"
+	expected := "foo:1.000000|c\nfoo:2.000000|c\nfoo:3.000000|cbar:4.000000|ms\nbar:5.000000|ms"
 	got := b.String()
 	if expected != got {
-		t.Errorf("expected %q, got %q", expected, got)
+		t.Errorf("expected '%s', got '%s'", expected, got)
 	}
 }
 
@@ -78,7 +78,7 @@ func TestSamplingZero(t *testing.T) {
 	s.Counter(0.0, "nobucket", 1) // should never succeed
 
 	if expected, got := "", b.String(); expected != got {
-		t.Errorf("expected %q, got %q", expected, got)
+		t.Errorf("expected '%s', got '%s'", expected, got)
 	}
 }
 
